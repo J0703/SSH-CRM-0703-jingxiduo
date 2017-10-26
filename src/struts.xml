@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.devMode" value="true"/>
+    <!--将strut2中的对象创建交给spring完成-->
+    <constant name="struts.objectFactory" value="spring"/>
+
+    <package name="SSH-CRM" extends="json-default">
+        <action name="findDepart" class="com.lanou.human_resource.action.DepartmentAction" method="findDepartment">
+            <result name="success">/pages/department/listDepartment.jsp</result>
+        </action>
+        <action name="findPost" class="com.lanou.human_resource.action.PostAction" method="">
+            <result name="success">/pages/post/listPost.jsp</result>
+        </action>
+        <action name="findStaff" class="com.lanou.human_resource.action.StaffAction" method="findStaff">
+            <result name="success">/pages/staff/listStaff.jsp</result>
+        </action>
+    </package>
+</struts>
