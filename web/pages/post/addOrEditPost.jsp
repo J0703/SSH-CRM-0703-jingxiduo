@@ -40,12 +40,11 @@
 	    <td>选择部门：</td>
 	    <td><select name="crmDepartment.depId">
 		    <option value="">----请--选--择----</option>
-		    <option value="ee050687bd1a4455a153d7bbb7000001" selected="selected">教学部</option>
-		    <option value="ee050687bd1a4455a153d7bbb7000002">咨询部</option>
+
 		</select>
   </td>
 	    <td>职务：</td>
-	    <td><input type="text" name="postName" value="总监"/> </td>
+	    <td><input type="text" name="postName" value=""/> </td>
 	  </tr>
 	</table>
 </form>

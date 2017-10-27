@@ -35,15 +35,17 @@ public interface BaseDao<T> {
      */
     T findSingle(String hql,Map<String,Object> params);
 
+    void save(T t);
+
    /*
      更新数据
     */
 
-    T update(String hql);
+    void update(T t);
 
     /*
      删除数据
 
      */
-    T delete(String hql);
+    void delete(T t);
 }

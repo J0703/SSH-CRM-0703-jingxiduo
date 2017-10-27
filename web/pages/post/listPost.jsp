@@ -45,22 +45,17 @@
     <td width="6%" align="center">职务名称</td>
     <td width="7%" align="center">编辑</td>
   </tr>
-  
-  	<tr class="tabtd1">
-	    <td align="center">教学部 </td>
-	    <td align="center">总监 </td>
-	  	<td width="7%" align="center">
-	  		<a href="${pageContext.request.contextPath}/pages/post/addOrEditPost.jsp"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img" /></a>
-	  	</td>
-	  </tr>
-  
-  	<tr class="tabtd2">
-	    <td align="center">教学部 </td>
-	    <td align="center">讲师 </td>
-	  	<td width="7%" align="center">
-	  		<a href="${pageContext.request.contextPath}/pages/post/addOrEditPost.jsp"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img" /></a>
-	  	</td>
-	  </tr>
+
+    <s:iterator value="postList" var="post">
+        <tr class="tabtd1">
+            <td align="center">${post.department.depName}</td>
+            <td align="center">${post.postName}</td>
+            <td width="7%" align="center">
+                <a href="${pageContext.request.contextPath}/findPost.action"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
+            </td>
+        </tr>
+    </s:iterator>
+
 </table>
 
 

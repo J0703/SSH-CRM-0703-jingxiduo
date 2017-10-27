@@ -10,6 +10,7 @@ public class Post {
     private String postId; //职务编号
     private String postName;  //职务名称
 
+
     //职务和员工的关系：一对多，一个职务可以有多个员工
     private Set<Staff> staffs = new HashSet<Staff>();
     //职务和部门的关系：多对一，多个职务同属于一个部门
@@ -17,6 +18,10 @@ public class Post {
     public Post() {
     }
 
+    public Post(String postId, String postName) {
+        this.postId = postId;
+        this.postName = postName;
+    }
 
     public Post(String postId, String postName, Department department) {
         this.postId = postId;

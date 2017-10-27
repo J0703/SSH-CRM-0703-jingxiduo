@@ -25,4 +25,6 @@ public class StaffServiceImpl implements StaffService{
     public List<Staff> findAll(String hql) {
         return staffDao.findAll(hql);
     }
+
+
 }

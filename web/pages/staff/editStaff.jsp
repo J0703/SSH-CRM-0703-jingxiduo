@@ -5,7 +5,50 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
 <link href="${pageContext.request.contextPath}/css/sys.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/Calendar.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/Calendar.js">
+	//显示职务
+	function showPost(obj) {
+		//1.获得选中部门
+		var depId = obj.value;
+		//2.发送ajax，通过部门查询职务
+		//2.1 获得引擎  xml->dom->DOM HttpRequest(节点操作)
+		var xmlhttp=null;
+		if(window.XMLHttpRequest){
+
+		}else if(window.ActiveXObject){
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		//2.2 设置回调函数
+		xmlhttp.onreadystatechange = function () {
+			//请求完成，正常响应
+			if(xmlhttp.readyState == 4 && xmlhttp.status ==200){
+				//3.获得数据，并展示，手动ajax获得json数据字符串
+				var textData = xmlhttp.responseText;
+				//3.1 将字符串手动转换json对象
+				var jsonData = eval("("+textData+")");
+				//获得select对象
+				var postSelectElement = document.getElementById("postSelectId");
+				postSelectElement.innerHTML ="<option value=>------请-选-择------</option>";
+
+				//3.2  遍历
+				for(var i = 0;i < jsonData.length;i++){
+					var postObj = jsonData[i];
+					//获得职务id
+					var postId = postObj.postId;
+					//获得职务名称
+					var postName = postObj.postName;
+					//3.3将数显示到select标签
+					postSelectElement.innerHTML  +=  "<option value='"+postId+"'>"+postName+"</option>";
+				}
+			}
+		};
+		//2.3创建连接
+		var url ="${pageContext.request.contextPath}/postAction"+depId;
+		xmlhttp.open("GET",url);
+		//2.4发送请求
+		xmlhttp.send(null);
+	}
+</script>
 </head>
 
 <body class="emp_body">

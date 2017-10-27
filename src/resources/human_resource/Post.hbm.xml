@@ -9,9 +9,13 @@
         <property name="postName"/>
         <many-to-one name="department"
                      cascade="save-update"
-                     class="com.lanou.human_resource.domain.Department"
                      column="depId"
+                     class="com.lanou.human_resource.domain.Department"
                      lazy="false"
-                     not-null="false"/>
+                     not-null="false"
+        />
+
+
+
     </class>
 </hibernate-mapping>

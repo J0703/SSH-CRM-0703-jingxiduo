@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
       <context:component-scan base-package="com.lanou"/>
 
       <!--配置hibernate-->
@@ -30,43 +31,53 @@
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-                <prop key="hibernate.current_session_context_class">thread</prop>
+                <!--<prop key="hibernate.current_session_context_class">thread</prop>-->
             </props>
         </property>
 
         <!--3.加载实体类Hibernate的映射文件
             自动匹配resource目录下所有.hbm.xml后缀文件-->
         <property name="mappingLocations" value="classpath:resources/human_resource/*.hbm.xml"/>
-
     </bean>
 
-    <!-- 3.配置事物对象(切面) -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
 
+        <!--配置事务对象（切面）-->
+        <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+            <property name="sessionFactory" ref="sessionFactory"/>
+        </bean>
+        <!--事务详情：增删改：读写；查询；只读-->
+        <tx:advice id="txAdvice" transaction-manager="transactionManager">
+          <tx:attributes>
+              <tx:method name="add*"/>
+              <tx:method name="update*"/>
+              <tx:method name="delete*"/>
+              <tx:method name="login" read-only="true"/>
+              <tx:method name="find*" read-only="true"/>
+          </tx:attributes>
+        </tx:advice>
+
+        <!--aop编程：事务只作用于service层即可-->
+        <aop:config>
+            <aop:pointcut id="pointcut" expression="execution(* com.lanou.*.service.impl.*.*(..))"/>
+            <!--配置通知-->
+            <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+        </aop:config>
 
     <!-- 配置dao层 -->
     <bean id="departmentDao" class="com.lanou.human_resource.dao.impl.DepartmentDaoImpl">
         <!-- 给dao层实现类中的sessionFactory进行赋值 -->
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="departmentService" class="com.lanou.human_resource.service.impl.DepartmentServiceImpl">
-        <property name="departmentDao" ref="departmentDao"/>
-    </bean>
+
 
     <bean id="postDao" class="com.lanou.human_resource.dao.impl.PostDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="postService" class="com.lanou.human_resource.service.impl.PostServiceImpl">
-        <property name="postDao" ref="postDao"/>
-    </bean>
+
 
     <bean id="staffDao" class="com.lanou.human_resource.dao.impl.StaffDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="staffService" class="com.lanou.human_resource.service.impl.StaffServiceImpl">
-        <property name="staffDao" ref="staffDao"/>
-    </bean>
+
     </beans>
 

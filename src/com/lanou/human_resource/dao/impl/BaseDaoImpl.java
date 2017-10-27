@@ -5,7 +5,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,53 +16,41 @@ import java.util.Map;
 /**
  * Created by jbtms940317 on 17/10/25.
  */
-public class BaseDaoImpl<T> implements BaseDao<T>{
+@Transactional
+public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{/**
+ * 通过主键id查找对象
+ * @param id
+ * @param tClass
+ * @return
+ */
+@Autowired
+ private SessionFactory sessionFactory;
 
-    private static SessionFactory sessionFactory;
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
+@Override
+public T findById(Serializable id, Class<T> tClass) {
+    Session session = currentSession();
 
-    public static void setSessionFactory(SessionFactory sessionFactory) {
-        BaseDaoImpl.sessionFactory = sessionFactory;
-    }
+    T t = (T) session.get(tClass,id);
 
-    /**
-     * 通过主键id查找对象
-     * @param id
-     * @param tClass
-     * @return
-     */
-    @Override
-    public T findById(Serializable id, Class<T> tClass) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction =session.beginTransaction();
-
-        T t = (T) session.get(tClass,id);
-
-        transaction.commit();
-        return null;
-    }
+    return null;
+}
 
     @Override
     public List<T> findAll(String hql) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+        Session session = currentSession();
 
         //执行查询语句
         Query query = session.createQuery(hql);
 
         List<T> tList = query.list();
 
-        transaction.commit();
         return tList;
     }
 
     @Override
     public List<T> find(String hql, Map<String, Object> params) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction =session.beginTransaction();
+        Session session = currentSession();
 
         Query query = session.createQuery(hql);
 
@@ -72,7 +62,6 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
 
         List<T> tList = query.list();
 
-        transaction.commit();
         return tList;
     }
 
@@ -85,25 +74,29 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
         return null;
     }
 
-
-
     @Override
-    public T update(String hql) {
+    public void save(T t) {
         Session session = sessionFactory.openSession();
-        Transaction transaction =session.beginTransaction();
-
-        session.update(hql);
+        Transaction transaction = session.beginTransaction();
+        session.save(t);
         transaction.commit();
-        return null;
     }
 
     @Override
-    public T delete(String hql) {
+    public void update(T t) {
         Session session = sessionFactory.openSession();
-        Transaction transaction =session.beginTransaction();
-
-        session.delete(hql);
+        Transaction transaction = session.beginTransaction();
+        session.update(t);
         transaction.commit();
-        return null;
     }
+
+    @Override
+    public void delete(T t) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(t);
+        transaction.commit();
+    }
+
 }
+

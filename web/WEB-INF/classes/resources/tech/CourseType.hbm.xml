@@ -1,0 +1,21 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.lanou.tech.domain.CourseType">
+        <id name="courseTypeId">
+            <generator class="uuid"/>
+        </id>
+
+        <property name="courseCost"/>
+        <property name="total"/>
+        <property name="remark"/>
+        <property name="courseName"/>
+
+        <!--课程类别和班级关系：一对多，一个课程类别可以有多个班级-->
+        <set name="classesSet">
+            <key column="courseTypeId"/>
+            <one-to-many class="com.lanou.tech.domain.Classes"/>
+        </set>
+    </class>
+</hibernate-mapping>

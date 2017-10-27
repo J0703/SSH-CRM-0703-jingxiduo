@@ -6,6 +6,7 @@ import com.lanou.human_resource.domain.Department;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by jbtms940317 on 17/10/25.
