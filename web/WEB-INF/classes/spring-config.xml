@@ -79,5 +79,9 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean id="service" class="com.lanou.human_resource.service.impl.StaffServiceImpl">
+        <property name="staffDao" ref="staffDao"></property>
+    </bean>
+
     </beans>
 

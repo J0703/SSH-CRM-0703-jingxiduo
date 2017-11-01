@@ -48,4 +48,9 @@ public interface BaseDao<T> {
 
      */
     void delete(T t);
+
+
+    List<T> findWhole(String hql1,int startIndex,int pageSize);
+
+    int getTotalRecord(String hql);
 }

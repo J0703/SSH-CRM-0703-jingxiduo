@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -33,7 +34,7 @@
 </head>
 
 <body class="updpwd">
-	<form action="/crm2/staff/staffAction_editPassword.action" method="post">
+	<form action="${pageContext.request.contextPath}/updatePwd.action" method="post">
 		<table style="width: 200px">
 			<tr>
 				<td colspan="2">
@@ -42,15 +43,15 @@
 			</tr>
 			<tr>
 				<td>原始密码：</td>
-				<td><input type="password" name="oldPassword" value="" /></td>
+				<td><input type="password" name="loginPwd" value="" /></td>
 			</tr>
 			<tr>
 				<td>新&nbsp;密&nbsp;码：</td>
-				<td><input type="password" name="newPassword" value="" /></td>
+				<td><input type="password" name="newLoginPwd" value="" /></td>
 			</tr>
 			<tr>
 				<td>确认密码：</td>
-				<td><input type="password" name="reNewPassword" value="" /></td>
+				<td><input type="password" name="reLoginPwd" value="" /></td>
 			</tr>
 			<tr>
 				<td colspan="2">
@@ -61,6 +62,9 @@
 				</td>
 			</tr>
 		</table>
+		<font color="#f00">
+			<s:actionerror/>
+		</font>
 	</form>
 </body>
 </html>
