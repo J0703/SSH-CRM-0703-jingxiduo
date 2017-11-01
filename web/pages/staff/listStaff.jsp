@@ -87,6 +87,7 @@
 <form action="${pageContext.request.contextPath}/Staff/findByPageStaff.action" method="post">
 <table width="100%" border="1">
     <tr class="henglan" style="font-weight:bold;">
+        <td width="10%" align="center">登录名</td>
         <td width="10%" align="center">员工姓名</td>
         <td width="6%" align="center">性别</td>
         <td width="12%" align="center">入职时间</td>
@@ -96,6 +97,7 @@
     </tr>
     <s:iterator value="#pageBean.data" var="staff">
         <tr class="tabtd1">
+            <td align="center">${staff.loginName}</td>
             <td align="center">${staff.staffName}</td>
             <td align="center">${staff.gender}</td>
             <td align="center">${staff.onDutyDate}</td>

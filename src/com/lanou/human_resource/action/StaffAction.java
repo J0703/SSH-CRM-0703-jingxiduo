@@ -23,7 +23,7 @@ import java.util.List;
  * Created by jbtms940317 on 17/10/26.
  */
 //使用驱动模型，将action中参数清理
-public class StaffAction extends ActionSupport implements ModelDriven<Staff>{
+public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
 
     @Autowired
     @Qualifier("staffService")
@@ -38,14 +38,14 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff>{
     private List<Post> postList;
     private List<Department> departments;
     private String staffId;
-    private String  postId;
+    private String postId;
     private String depId;
     private Staff staff;
     private Staff staffDriven;
     private int pageNum;
     private int pageSize = 2;
 
-    public String findStaff(){
+    public String findStaff() {
         staffList = staffService.findAll();
         return SUCCESS;
     }
@@ -53,47 +53,50 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff>{
     /**
      * 分页查询
      */
-    public String findByPage(){
-        if(pageNum == 0){
+    public String findByPage() {
+        if (pageNum == 0) {
             pageNum = 1;
         }
-        PageBean<Staff>pageBean = staffService.findByPage(pageNum,pageSize);
-        ActionContext.getContext().put("pageBean",pageBean);
+        PageBean<Staff> pageBean = staffService.findByPage(pageNum, pageSize);
+        ActionContext.getContext().put("pageBean", pageBean);
         return SUCCESS;
     }
 
     /**
      * 高级查询
+     *
      * @return
      */
-    public String find(){
+    public String find() {
         List<Object> params = new ArrayList<>();
 
         params.add(staffDriven.getStaffName());
         params.add(postId);
         params.add(depId);
 
-        if(pageNum == 0){
+        if (pageNum == 0) {
             pageNum = 1;
         }
-        PageBean<Staff>pageBean =staffService.findAdvancedQuery(params,pageNum,pageSize);
-        ActionContext.getContext().put("pageBean",pageBean);
+        PageBean<Staff> pageBean = staffService.findAdvancedQuery(params, pageNum, pageSize);
+        ActionContext.getContext().put("pageBean", pageBean);
         return SUCCESS;
     }
+
     /**
      * 更新或添加
+     *
      * @return
      */
-    public String update(){
+    public String update() {
         Date date = staffDriven.getOnDutyDate();
         Post post = postService.findById(postId);
-        if(StringUtils.isBlank(staffDriven.getStaffId())) {
+        if (StringUtils.isBlank(staffDriven.getStaffId())) {
             Staff staff1 = new Staff(staffDriven.getLoginName(), staffDriven.getLoginPwd(),
                     staffDriven.getStaffName(), staffDriven.getGender(), date);
             staff1.setPost(post);
             staff1.setDepartment(post.getDepartment());
             staffService.save(staff1);
-        }else{
+        } else {
             Staff staff1 = new Staff(staffDriven.getStaffId(), staffDriven.getLoginName(), staffDriven.getLoginPwd(),
                     staffDriven.getStaffName(), staffDriven.getGender(), date);
             staff1.setPost(post);
@@ -103,25 +106,30 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff>{
         return SUCCESS;
     }
 
-    public void validateUpdate(){
-        if(StringUtils.isBlank(staffDriven.getLoginName())){
+    public void validateUpdate() {
+        if (StringUtils.isBlank(staffDriven.getLoginName())) {
             addActionError("登录名不能为空");
         }
-        if(StringUtils.isBlank(staffDriven.getLoginPwd())){
+        if (StringUtils.isBlank(staffDriven.getLoginPwd())) {
             addActionError("密码不能为空");
         }
-        if(StringUtils.isBlank(staffDriven.getStaffName())){
+        if (StringUtils.isBlank(staffDriven.getStaffName())) {
             addActionError("员工名不能为空");
         }
-        if(StringUtils.isBlank(staffDriven.getGender())){
+        if (StringUtils.isBlank(staffDriven.getGender())) {
             addActionError("性别不能为空");
+        }
+        for (Staff staff : staffService.findAll()) {
+            if (staffDriven.getLoginName().equals(staff.getLoginName())) {
+                addActionError("登录名不得重复");
+            }
         }
 
     }
 
-    public String findSingleStaff(){
+    public String findSingleStaff() {
         departments = departmentService.findAll();
-        postList =postService.findAll();
+        postList = postService.findAll();
         staff = staffService.findById(staffDriven.getStaffId());
         return SUCCESS;
     }

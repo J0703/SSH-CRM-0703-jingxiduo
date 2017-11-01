@@ -55,6 +55,7 @@
 	    <td><input type="text" name="postName" value="<s:property value="post.postName"/>"/> </td>
 	  </tr>
 	</table>
+    <h2><s:actionerror/></h2>
 </form>
 <script>
 

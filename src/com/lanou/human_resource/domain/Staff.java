@@ -35,6 +35,16 @@ public class Staff {
         this.department = department;
     }
 
+    public Staff(String loginName, String loginPwd, String staffName, String gender, Date onDutyDate, Post post, Department department) {
+        this.loginName = loginName;
+        this.loginPwd = loginPwd;
+        this.staffName = staffName;
+        this.gender = gender;
+        this.onDutyDate = onDutyDate;
+        this.post = post;
+        this.department = department;
+    }
+
     public Staff(String loginName, String loginPwd, String staffName, String gender, Date onDutyDate) {
         this.loginName = loginName;
         this.loginPwd = loginPwd;

@@ -80,7 +80,7 @@ public class StaffServiceImpl implements StaffService {
         String hql1 = "from Staff where 1=1";
         int totalRecord = staffDao.getTotalRecordStaff(hql,params);
         PageBean<Staff> pageBean = new PageBean<>(pageNum,pageSize,totalRecord);
-        List<Staff> data = staffDao.findAdvancedQuery(hql1,params,pageBean.getStartIndex(),pageBean.getPageSize());
+        List<Staff> data = staffDao.findAdvancedQuery(hql1,params,pageBean.getStartIndex(),pageSize);
         pageBean.setData(data);
         return pageBean;
     }

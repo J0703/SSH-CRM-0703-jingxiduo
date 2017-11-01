@@ -29,12 +29,10 @@
 
     <!--部门包-->
     <package name="SSH-CRM-Depart" extends="json-default" namespace="/Depart">
-        <action name="findDepart" class="com.lanou.human_resource.action.DepartmentAction" method="findDepartment">
-            <result name="success">/pages/department/listDepartment.jsp</result>
-        </action>
+
         <action name="update" class="com.lanou.human_resource.action.DepartmentAction" method="update">
             <!--添加成功后返回部门列表-->
-            <result name="success" type="chain">findDepart</result>
+            <result name="success" type="chain">findByPageDepartment</result>
             <result name="input">/pages/department/addOrEditDepartment.jsp</result>
         </action>
         <action name="showDepart" class="com.lanou.human_resource.action.DepartmentAction" method="findDepartment">
@@ -59,7 +57,7 @@
         </action>
         <action name="updatePost" class="com.lanou.human_resource.action.PostAction" method="update">
             <!--添加成功后返回职务列表-->
-            <result name="success" type="chain">findPost</result>
+            <result name="success" type="chain">findByPagePost</result>
             <result name="input">/pages/post/addOrEditPost.jsp</result>
         </action>
         <action name="showPost" class="com.lanou.human_resource.action.PostAction" method="showPost">
@@ -75,13 +73,10 @@
         </action>
     </package>
     <package name="SSH-CRM-Staff" extends="json-default" namespace="/Staff">
-        <!--查找所有员工-->
-        <action name="findStaff" class="com.lanou.human_resource.action.StaffAction" method="findStaff">
-            <result name="success">/pages/staff/listStaff.jsp</result>
-        </action>
+     
         <!--更新员工-->
         <action name="updateStaff" class="com.lanou.human_resource.action.StaffAction" method="update">
-            <result name="success" type="chain">findStaff</result>
+            <result name="success" type="chain">findByPageStaff</result>
             <result name="input">/pages/staff/editStaff.jsp</result>
         </action>
         <action name="login" class="com.lanou.human_resource.action.loginAction" method="login">

@@ -22,8 +22,8 @@ public class StaffDaoImpl extends BaseDaoImpl<Staff>
     public int getTotalRecordStaff(String hql, List<Object> params) {
         StringBuffer stringBuffer = new StringBuffer(hql);
         Object staffName = params.get(0);
-        Object depId = params.get(1);
-        Object postId = params.get(2);
+        Object postId = params.get(1);
+        Object depId = params.get(2);
         //声明lists集合
         List<Object> lists = new ArrayList<>();
         //高级查询的三大条件
@@ -35,6 +35,10 @@ public class StaffDaoImpl extends BaseDaoImpl<Staff>
         if (!postId.equals("-1")) {
             stringBuffer.append("and postId like ?");
             lists.add(postId);
+        }
+        if(!depId.equals("-1")){
+            stringBuffer.append("and depId like ?");
+            lists.add(depId);
         }
         List<Long> find = (List<Long>) this.getHibernateTemplate().find(stringBuffer.toString(), lists.toArray());
         if (find != null) {
@@ -48,6 +52,7 @@ public class StaffDaoImpl extends BaseDaoImpl<Staff>
         StringBuffer stringBuffer = new StringBuffer(hql);
         Object staffName = params.get(0);
         Object postId = params.get(1);
+        Object depId = params.get(2);
         //声明list集合
         List<Object> lists = new ArrayList<>();
         //高级查询
@@ -60,6 +65,12 @@ public class StaffDaoImpl extends BaseDaoImpl<Staff>
             stringBuffer.append("and postId like ?");
             lists.add(postId);
         }
+
+        if(!depId.equals("-1")){
+            stringBuffer.append("and depId like ?");
+            lists.add(depId);
+        }
+
             return this.getHibernateTemplate().execute(new PageHibernateCallback<Staff>(stringBuffer.toString(),lists.toArray(),startIndex,pageSize));
     }
 }

@@ -86,6 +86,7 @@
             <td width="62%"></td>
         </tr>
     </table>
+    <h2><s:actionerror/></h2>
 </form>
 
 <script>

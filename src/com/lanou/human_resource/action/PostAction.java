@@ -92,6 +92,12 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
         if (StringUtils.isBlank(postDriven.getPostName())) {
             addActionError("输入职务名称不能为空");
         }
+        for (Post post2:postService.findAll()) {
+            if(postDriven.getPostName().equals(post2.getPostName())){
+                addActionError("输入职务名称不得重复");
+            }
+        }
+
     }
 
     public String findSingle(){

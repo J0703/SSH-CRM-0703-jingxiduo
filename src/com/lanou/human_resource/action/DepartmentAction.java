@@ -72,6 +72,12 @@ public class DepartmentAction extends ActionSupport implements ModelDriven<Depar
         if(StringUtils.isBlank(departmentDriven.getDepName())){
             addActionError("输入部门名称不能为空");
         }
+        for (Department department2:departmentService.findAll()) {
+            if(departmentDriven.getDepName().equals(department2.getDepName())){
+                addActionError("输入部门名称不得重复");
+            }
+        }
+
     }
 
     public String findSingle(){
