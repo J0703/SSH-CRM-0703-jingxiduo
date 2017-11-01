@@ -18,9 +18,6 @@ import java.util.Map;
 public class StaffDaoImpl extends BaseDaoImpl<Staff>
         implements StaffDao {
 
-    private StaffDao staffDao;
-
-
     @Override
     public int getTotalRecordStaff(String hql, List<Object> params) {
         StringBuffer stringBuffer = new StringBuffer(hql);

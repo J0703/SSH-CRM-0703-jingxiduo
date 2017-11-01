@@ -6,7 +6,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>无标题文档</title>
-    <script src="/jquery-3.2.1副本.js"></script>
+    <script src="/js/jquery-3.2.1.js"></script>
     <link href="${pageContext.request.contextPath}/css/sys.css" type="text/css" rel="stylesheet"/>
 
 </head>
@@ -39,7 +39,7 @@
     </tr>
 </table>
 
-<form action="${pageContext.request.contextPath}/findByPageDepartment.action" method="post">
+<form action="${pageContext.request.contextPath}/Depart/findByPageDepartment.action" method="post">
     <table width="100%" border="1">
 
         <tr class="henglan" style="font-weight:bold;">
@@ -52,7 +52,7 @@
             <tr class="tabtd1">
                 <td align="center">${department.depName}</td>
                 <td width="7%" align="center">
-                    <a href="${pageContext.request.contextPath}/findSingle.action?depId=${department.depId}"><img
+                    <a href="${pageContext.request.contextPath}/Depart/findSingle.action?depId=${department.depId}"><img
                             src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
                 </td>
             </tr>

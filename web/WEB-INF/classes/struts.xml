@@ -10,20 +10,25 @@
     <!--将strut2中的对象创建交给spring完成-->
     <constant name="struts.objectFactory" value="spring"/>
 
-    <package name="common" extends="struts-default">
+    <package name="SaveOrUpdate" extends="struts-default">
         <interceptors>
-            <interceptor name="loginInterceptor" class="com.lanou.human_resource.Interceptor"/>
-            <!--自定义拦截器-->
-            <interceptor-stack name="loginStack">
+            <interceptor name="saveOrUpdate" class="com.lanou.human_resource.Interceptor"/>
+            <!--声明一个拦截器集合,将多个拦截器放在stack中-->
+            <interceptor-stack name="myInterceptor">
+              <interceptor-ref name="saveOrUpdate">
+                  <param name="includeMethods">update,updatePost,updateStaff,findDepart</param>
+              </interceptor-ref>
                 <interceptor-ref name="defaultStack"/>
-                <interceptor-ref name="loginInterceptor"/>
             </interceptor-stack>
         </interceptors>
-        <!--声明默认-->
-        <default-interceptor-ref name="loginStack"/>
+        <default-interceptor-ref name="myInterceptor"/>
+        <global-results>
+            <result name="reject">/pages/reject.jsp</result>
+        </global-results>
     </package>
 
-    <package name="SSH-CRM" extends="json-default">
+    <!--部门包-->
+    <package name="SSH-CRM-Depart" extends="json-default" namespace="/Depart">
         <action name="findDepart" class="com.lanou.human_resource.action.DepartmentAction" method="findDepartment">
             <result name="success">/pages/department/listDepartment.jsp</result>
         </action>
@@ -40,14 +45,20 @@
         <action name="findSingle" class="com.lanou.human_resource.action.DepartmentAction" method="findSingle">
             <result name="success">/pages/department/addOrEditDepartment.jsp</result>
         </action>
-        <action name="findByPageDepartment" class="com.lanou.human_resource.action.DepartmentAction" method="findByPage">
+        <action name="findByPageDepartment" class="com.lanou.human_resource.action.DepartmentAction"
+                method="findByPage">
             <result name="success">/pages/department/listDepartment.jsp</result>
         </action>
+    </package>
+
+    <!--职务包-->
+    <package name="SSH-CRM-Post" extends="json-default" namespace="/Post">
+        <!---->
         <action name="findPost" class="com.lanou.human_resource.action.PostAction" method="findPost">
             <result name="success">/pages/post/listPost.jsp</result>
         </action>
         <action name="updatePost" class="com.lanou.human_resource.action.PostAction" method="update">
-            <!--添加成功后返回职工列表-->
+            <!--添加成功后返回职务列表-->
             <result name="success" type="chain">findPost</result>
             <result name="input">/pages/post/addOrEditPost.jsp</result>
         </action>
@@ -62,13 +73,16 @@
         <action name="findByPagePost" class="com.lanou.human_resource.action.PostAction" method="findByPage">
             <result name="success">/pages/post/listPost.jsp</result>
         </action>
-
+    </package>
+    <package name="SSH-CRM-Staff" extends="json-default" namespace="/Staff">
+        <!--查找所有员工-->
         <action name="findStaff" class="com.lanou.human_resource.action.StaffAction" method="findStaff">
             <result name="success">/pages/staff/listStaff.jsp</result>
         </action>
+        <!--更新员工-->
         <action name="updateStaff" class="com.lanou.human_resource.action.StaffAction" method="update">
             <result name="success" type="chain">findStaff</result>
-            <result name="login">/pages/staff/editStaff.jsp</result>
+            <result name="input">/pages/staff/editStaff.jsp</result>
         </action>
         <action name="login" class="com.lanou.human_resource.action.loginAction" method="login">
             <!--1.登录成功-->
@@ -78,16 +92,19 @@
         </action>
         <action name="updatePwd" class="com.lanou.human_resource.action.loginAction" method="updatePwd">
             <!--1.修改成功-->
-            <result name="success" type="redirect">/pages/success.jsp</result>
+            <result name="success" type="redirect">/pages/login.jsp</result>
             <!--2.没有修改成，需要修改-->
             <result name="input">/pages/staff/updPwd.jsp</result>
         </action>
+        <!--查询单个员工-->
         <action name="findSingleStaff" class="com.lanou.human_resource.action.StaffAction" method="findSingleStaff">
             <result name="success">/pages/staff/editStaff.jsp</result>
         </action>
+        <!--分页查询-->
         <action name="findByPageStaff" class="com.lanou.human_resource.action.StaffAction" method="findByPage">
             <result name="success">/pages/staff/listStaff.jsp</result>
         </action>
+        <!--高级查询-->
         <action name="findAdvancedQuery" class="com.lanou.human_resource.action.StaffAction" method="find">
             <result name="success">/pages/staff/listStaff.jsp</result>
         </action>

@@ -8,7 +8,7 @@
 <title>无标题文档</title>
 <link href="${pageContext.request.contextPath}/css/sys.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/Calendar.js"></script>
-	<script src="/jquery-3.2.1副本.js"></script>
+	<script src="/js/jquery-3.2.1.js"></script>
 </head>
 
 <body class="emp_body">
@@ -36,14 +36,14 @@
   </tr>
 </table>
 
-<form action="${pageContext.request.contextPath}/updateStaff.action" method="post">
+<form action="${pageContext.request.contextPath}/Staff/updateStaff.action" method="post">
 	
 	<input type="hidden" name="staffId" value="<s:property value="staff.staffId"/>"/>
 	
 	<table width="88%" border="0" class="emp_table" style="width:80%;">
 	 <tr>
 	    <td>登录名：</td>
-	    <td><input type="text" name="loginName" value="<s:property value="staff.staffName"/>" /> </td>
+	    <td><input type="text" name="loginName" value="<s:property value="staff.loginName"/>" /> </td>
 	    <td>密码：</td>
 	    <td><input type="password" name="loginPwd" value="<s:property value="staff.loginPwd"/>" /> </td>
 	  </tr>
@@ -90,11 +90,12 @@
 	    <td width="62%"></td>
 	  </tr>
 	</table>
+	<s:actionerror/>
 </form>
 <script>
 	$(function () {
 		<c:if test="${empty departments}">
-		$.post("${pageContext.request.contextPath}/showDepart.action", null,
+		$.post("${pageContext.request.contextPath}/Depart/showDepart.action", null,
 				function (data) {
 					var _html = "<option value='-1'>---请选择---</option>";
 					$.each(data, function (index, value) {
@@ -104,7 +105,7 @@
 				}, "json");
 		</c:if>
 		$("#departmentId").change(function () {
-			$.post("${pageContext.request.contextPath}/showPost.action",
+			$.post("${pageContext.request.contextPath}/Post/showPost.action",
 					{
 						depId: $("#departmentId").val()
 					},

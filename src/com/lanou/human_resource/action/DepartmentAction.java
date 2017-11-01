@@ -76,6 +76,7 @@ public class DepartmentAction extends ActionSupport implements ModelDriven<Depar
 
     public String findSingle(){
         department = departmentService.findById(departmentDriven.getDepId());
+
         return SUCCESS;
     }
 

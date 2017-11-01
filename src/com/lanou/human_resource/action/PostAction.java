@@ -81,6 +81,7 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
             postService.save(post1);
         } else {
             Post post1 = new Post(postDriven.getPostId(), postDriven.getPostName());
+            post1.setDepartment(department);
             postService.update(post1);
         }
         return SUCCESS;
@@ -95,6 +96,7 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
 
     public String findSingle(){
         post = postService.findById(postDriven.getPostId());
+        departments = departmentService.findAll();
         return SUCCESS;
     }
 

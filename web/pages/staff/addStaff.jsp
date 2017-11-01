@@ -8,7 +8,7 @@
     <title>无标题文档</title>
     <link href="${pageContext.request.contextPath}/css/sys.css" type="text/css" rel="stylesheet"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/Calendar.js"></script>
-    <script src="/jquery-3.2.1副本.js"></script>
+    <script src="/js/jquery-3.2.1.js"></script>
 </head>
 
 <body class="emp_body">
@@ -37,7 +37,7 @@
     </tr>
 </table>
 
-<form action="${pageContext.request.contextPath}/updateStaff.action" method="post">
+<form action="${pageContext.request.contextPath}/Staff/updateStaff.action" method="post">
 
 
     <table width="88%" border="0" class="emp_table" style="width:80%;">
@@ -91,7 +91,7 @@
 <script>
     $(function () {
         //页面加载
-        $.post("${pageContext.request.contextPath}/showDepart.action", null, function (data) {
+        $.post("${pageContext.request.contextPath}/Depart/showDepart.action", null, function (data) {
             var _html = "<option value='-1'>---请选择---</option>";
             $.each(data, function (index, value) {
                 _html += '<option value="' + value.depId + '">' + value.depName + '</option>'
@@ -99,7 +99,7 @@
             $("#departmentId").html(_html);
         }, "json");
         $("#departmentId").change(function () {
-            $.post("${pageContext.request.contextPath}/showPost.action",
+            $.post("${pageContext.request.contextPath}/Post/showPost.action",
                     {
                         depId: $("#departmentId").val()
                     },
